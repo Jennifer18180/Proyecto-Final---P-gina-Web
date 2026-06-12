@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizt - Resultados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="result-container">
+        <h1>¡Cuestionario Finalizado!</h1>
+        <h2>Estadísticas de tu desempeño:</h2>
+
+        <div class="stats-box">
+            <p><strong>Preguntas respondidas:</strong> {{ totales }}</p>
+            <p class="correct"><strong>Respuestas Correctas:</strong> {{ correctas }}</p>
+            <p class="incorrect"><strong>Respuestas Incorrectas:</strong> {{ incorrectas }}</p>
+            <div class="score-badge">
+                <p>Tu puntuación final es de:</p>
+                <h3>{{ porcentaje }}%</h3>
+            </div>
+        </div>
+
+        <p><a href="{{ url_for('index') }}" class="btn-restart">Volver a iniciar Quizt</a></p>
+    </div>
+</body>
+
+</html>
