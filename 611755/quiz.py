@@ -1,17 +1,28 @@
 from flask import Flask, redirect, url_for, session, request, render_template
 from database import get_next_question, get_quises
 import random
+import sqlite3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'NoTieneClave'
 
 
 def start_quiz(quiz_id):
-    # Convertimos explicitamente a int (para mantener la integridad del dato acorde a la DB)
     session['quiz'] = int(quiz_id)
     session['prev_question'] = 0
     session['correctas'] = 0
     session['totales'] = 0
+    
+    # Obtenemos el total real de preguntas de este quiz para calcular el % perfecto
+    try:
+        conn = sqlite3.connect("quises.sqlite")
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM quiz_content WHERE quiz_id = ?", [quiz_id])
+        session['max_preguntas'] = cursor.fetchone()[0] or 5 # 5 por defecto si falla
+        cursor.close()
+        conn.close()
+    except:
+        session['max_preguntas'] = 5
 
 
 def end_quiz():
@@ -46,7 +57,6 @@ def index():
 
 
 def test():
-    # si no hay un quiz activo en la session, regresa al index
     if 'quiz' not in session or 'prev_question' not in session:
         return redirect(url_for('index'))
 
@@ -61,13 +71,23 @@ def test():
     session['prev_question'] = result[0]
     session['last_correct'] = result[2]
 
-    #Desordenar todo, para variar la posición de la respuesta correcta.
+    # Mezclamos las opciones
     respuestas = list(result[2:6]) 
-    random.shuffle(respuestas)
+    random.shuffle(respuestas) 
 
-    print(session.get('totales', 'correctas'))
-    return render_template('test.html', pregunta=result[1], opciones=respuestas)
+    # CÁLCULO DEL PORCENTAJE EXACTO Y REAL
+    # El progreso actual representa las preguntas que ya va a responder (ej: pregunta 1 de 5 = 20%)
+    preguntas_vistas = session.get('totales', 0) + 1
+    max_preguntas = session.get('max_preguntas', 5)
     
+    porcentaje_barra = round((preguntas_vistas / max_preguntas) * 100)
+    if porcentaje_barra > 100:
+        porcentaje_barra = 100
+
+    return render_template('test.html', 
+                           pregunta=result[1], 
+                           opciones=respuestas, 
+                           progreso=porcentaje_barra)
 
 
 def result():
@@ -83,12 +103,11 @@ def result():
                             totales=total,
                             correctas=correct,
                             incorrectas=incorrect,
-                            porcentaje= percent)
+                            porcentaje=percent)
 
-# Configuración de Rutas
 app.add_url_rule('/', 'index', index, methods=['GET', 'POST'])
 app.add_url_rule('/test', 'test', test, methods=['GET', 'POST'])
-app.add_url_rule('/result', 'result', result)
+app.add_url_rule('/result', 'result', result, methods=['GET', 'POST'])
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
