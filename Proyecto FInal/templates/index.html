@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizt - Mente en Crecimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="page-home">
+    <div class="transition-curtain"></div>
+
+    <div class="decor-shape shape-circle-1"></div>
+    <div class="decor-shape shape-circle-2"></div>
+    <div class="decor-shape shape-donut-3"></div> 
+    <div class="decor-shape shape-pill-4"></div>   
+    <div class="decor-shape shape-rhombus-5"></div> <div class="decor-shape shape-sparkle-6"></div> <div class="presentation-container">
+        <span class="badge-intro">Cuestionarios Interactivos</span>
+        <h1 class="main-title">Quizt: El Despertar de la Curiosidad</h1>
+        
+        <p class="subtitle">Empieza a aprender con cosas simples del día a día a las que a veces no les prestamos la suficiente atención.</p>
+        
+        <div class="philosophical-box">
+            <p class="phrase">{{ frase.texto }}</p>
+            <span class="author">{{ frase.autor }}</span>
+        </div>
+
+        <a href="{{ url_for('quises_selection') }}" id="start-btn" class="btn-hero">¡Conoce nuestros quizes! →</a>
+    </div>
+
+    <script>
+        document.getElementById('start-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = this.getAttribute('href');
+            const curtain = document.querySelector('.transition-curtain');
+            curtain.classList.add('active');
+            setTimeout(() => { window.location.href = targetUrl; }, 600); 
+        });
+    </script>
+</body>
+
+</html>

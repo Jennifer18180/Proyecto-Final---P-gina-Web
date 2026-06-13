@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizt - Resultados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="page-results">
+    
+    <div class="results-wrapper-flex">
+        
+        <div class="result-container" id="main-results-card">
+            <h1>¡Cuestionario Finalizado!</h1>
+            <h2>Estadísticas de tu desempeño:</h2>
+
+            <div class="stats-box-advanced">
+                <div class="bar-stat-row">
+                    <div class="bar-stat-info">
+                        <span>Preguntas Totales</span>
+                        <strong>{{ totales }}</strong>
+                    </div>
+                    <div class="bar-graphic-container">
+                        <div class="bar-filler total-bar" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="bar-stat-row">
+                    <div class="bar-stat-info">
+                        <span>Respuestas Correctas</span>
+                        <strong class="txt-correct">{{ correctas }}</strong>
+                    </div>
+                    <div class="bar-graphic-container">
+                        <div class="bar-filler correct-bar" style="width: {{ pct_correctas }}{{ '%' }};"></div>
+                    </div>
+                </div>
+
+                <div class="bar-stat-row">
+                    <div class="bar-stat-info">
+                        <span>Respuestas Incorrectas</span>
+                        <strong class="txt-incorrect">{{ incorrectas }}</strong>
+                    </div>
+                    <div class="bar-graphic-container">
+                        <div class="bar-filler incorrect-bar" style="width: {{ pct_incorrectas }}{{ '%' }};"></div>
+                    </div>
+                </div>
+
+                <div class="score-badge">
+                    <p>Tu puntuación final es de:</p>
+                    <h3>{{ porcentaje }}%</h3>
+                </div>
+            </div>
+
+            <div class="actions-vertical-gap">
+                <a href="{{ url_for('quises_selection') }}" class="btn-restart">Explorar otros Cuestionarios</a>
+                <button id="toggle-history-btn" class="btn-history-trigger">Ver Historial de Respuestas 📋</button>
+            </div>
+        </div>
+
+        <div class="history-side-panel" id="history-panel">
+            <h2>Tus Respuestas Guardadas</h2>
+            <p class="history-helper-text">Revisa las opciones que marcaste para deducir las respuestas correctas en tu próximo intento.</p>
+            
+            <div class="history-scroll-box">
+                {% for item in historial %}
+                <div class="history-item-card">
+                    <p class="history-q-text"><strong>Pregunta {{ loop.index }}:</strong> {{ item.pregunta }}</p>
+                    <div class="history-choice-badge">
+                        <span>Marcaste:</span> <strong>{{ item.elegida }}</strong>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('toggle-history-btn');
+        const mainCard = document.getElementById('main-results-card');
+        const sidePanel = document.getElementById('history-panel');
+
+        toggleBtn.addEventListener('click', function() {
+            mainCard.classList.toggle('shifted-left');
+            sidePanel.classList.toggle('panel-visible');
+            
+            if(sidePanel.classList.contains('panel-visible')) {
+                toggleBtn.innerHTML = "Ocultar Historial ✕";
+            } else {
+                toggleBtn.innerHTML = "Ver Historial de Respuestas 📋";
+            }
+        });
+    </script>
+</body>
+
+</html>

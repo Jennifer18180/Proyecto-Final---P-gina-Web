@@ -1,0 +1,384 @@
+/* ==========================================================================
+   VARIABLES Y PALETA DE COLORES RE-CORREGIDA
+   ========================================================================== */
+:root {
+    --bg-app: #f8fafc;            
+    --card-bg: #ffffff;           
+    --text-main: #0f172a;         
+    --text-muted: #475569;        
+    --border-color: #cbd5e1;      
+    --primary: #3b82f6;           
+    --primary-hover: #1d4ed8;
+    --bar-gradient: linear-gradient(90deg, #ff6b00 0%, #ff007f 35%, #00bfff 70%, #0040ff 100%);
+    --shadow-premium: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.02);
+
+    /* NUEVO COLOR SOLICITADO: Fondo Azul-Celeste Cristalino de tus primeras pantallas */
+    --bg-celeste-cristal: #f0f7ff; 
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    margin: 0;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Aplicación unificada del fondo celeste suave a Quizes y Resultados */
+body.page-quises, body.page-results {
+    background: var(--bg-celeste-cristal) !important;
+}
+
+body.page-home {
+    background-color: #fcfdfe;
+}
+
+/* ==========================================================================
+   CONFIGURACIÓN DE LAS 6 FIGURAS GEOMÉTRICAS INTERACTIVAS
+   ========================================================================== */
+.decor-shape {
+    position: absolute;
+    opacity: 0.12; 
+    transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+    cursor: pointer;
+}
+
+/* Figura 1: Esfera azul */
+.shape-circle-1 { top: 8%; left: 5%; width: 130px; height: 130px; border-radius: 50%; background: linear-gradient(45deg, #2563eb, #06b6d4); }
+
+/* Figura 2: Esfera rosa */
+.shape-circle-2 { bottom: 10%; right: 6%; width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(45deg, #7c3aed, #db2777); }
+
+/* Figura 3: Donut */
+.shape-donut-3 { top: 48%; left: 3%; width: 85px; height: 85px; border-radius: 50%; border: 16px solid transparent; background: linear-gradient(#fcfdfe, #fcfdfe) padding-box, linear-gradient(135deg, #0ea5e9, #10b981) border-box; }
+
+/* Figura 4: Píldora naranja */
+.shape-pill-4 { top: 25%; right: 4%; width: 45px; height: 105px; border-radius: 999px; background: linear-gradient(180deg, #f97316, #ec4899); transform: rotate(-25deg); }
+
+/* NUEVA FIGURA 5: Rombo estilizado con gradiente (Zona Inferior Izquierda) */
+.shape-rhombus-5 {
+    bottom: 15%;
+    left: 8%;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+    transform: rotate(45deg);
+    border-radius: 8px;
+}
+
+/* NUEVA FIGURA 6: Cruz o Destello abstracto (Zona Superior Derecha Media) */
+.shape-sparkle-6 {
+    top: 52%;
+    right: 12%;
+    width: 60px;
+    height: 6px;
+    background-color: #6366f1;
+    border-radius: 999px;
+    transform: rotate(90deg);
+}
+.shape-sparkle-6::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 60px;
+    background-color: #6366f1;
+    top: -27px;
+    left: 27px;
+    border-radius: 999px;
+}
+
+/* Efectos al pasar el cursor (Hover) */
+.shape-circle-1:hover { opacity: 0.5; transform: scale(1.15) translate(5px, 5px); filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4)); }
+.shape-circle-2:hover { opacity: 0.5; transform: scale(1.1) translate(-5px, -5px); filter: drop-shadow(0 0 20px rgba(219, 39, 119, 0.4)); }
+.shape-donut-3:hover { opacity: 0.6; transform: rotate(180deg) scale(1.2); }
+.shape-pill-4:hover { opacity: 0.5; transform: rotate(15deg) scale(1.1); }
+.shape-rhombus-5:hover { opacity: 0.5; transform: rotate(225deg) scale(1.15); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); }
+.shape-sparkle-6:hover { opacity: 0.6; background-color: #f43f5e; transform: rotate(180deg) scale(1.3); }
+.shape-sparkle-6:hover::after { background-color: #f43f5e; }
+
+/* ==========================================================================
+   CORTINA DE TRANSICIÓN CINEMÁTICA
+   ========================================================================== */
+.transition-curtain {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    z-index: 9999;
+    transition: left 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+    pointer-events: none;
+}
+.transition-curtain.active { left: 0; }
+
+/* ==========================================================================
+ESTILOS DE CONTENEDORES DE PRESENTACIÓN Y PREGUNTAS
+   ========================================================================== */
+.presentation-container {
+    max-width: 680px;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+    position: relative;
+    z-index: 10;
+}
+.badge-intro { background-color: #eff6ff; color: var(--primary); padding: 6px 16px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 20px; text-transform: uppercase; }
+.main-title { font-size: 2.8rem; font-weight: 800; line-height: 1.15; margin: 0 0 16px 0; background: linear-gradient(135deg, #0f172a 30%, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { font-size: 1.2rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 35px; }
+.philosophical-box { background-color: #ffffff; border-left: 4px solid var(--primary); padding: 24px 30px; border-radius: 4px 16px 16px 4px; box-shadow: var(--shadow-premium); text-align: left; margin-bottom: 40px; }
+.philosophical-box .phrase { font-size: 1.05rem; font-style: italic; color: #334155; margin-bottom: 10px; }
+.philosophical-box .author { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+.btn-hero { display: inline-block; background-color: #0f172a; color: #ffffff; padding: 18px 36px; font-size: 1.1rem; font-weight: 600; border-radius: 14px; text-decoration: none; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2); transition: all 0.25s ease; }
+.btn-hero:hover { background-color: var(--primary); transform: translateY(-2px); box-shadow: 0 12px 30px -5px rgba(37, 99, 234, 0.3); }
+
+/* LISTA DE QUIZES */
+.explore-header { text-align: center; max-width: 600px; margin-bottom: 45px; animation: slideUp 0.4s ease-out; }
+.explore-header h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 8px 0; }
+.explore-header p { color: var(--text-muted); font-size: 1rem; }
+.grid-container { display: table; width: 100%; max-width: 1024px; margin: 0 auto; text-align: center; }
+.quiz-card { display: inline-block; vertical-align: top; width: 30%; min-width: 280px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 32px 24px; margin: 15px; box-shadow: var(--shadow-premium); box-sizing: border-box; text-align: left; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); animation: slideUp 0.5s ease-out; }
+.quiz-card:hover { transform: translateY(-6px); border-color: #93c5fd; box-shadow: 0 35px 60px -15px rgba(15, 23, 42, 0.15); }
+.card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+.card-description { font-size: 0.92rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; min-height: 68px; }
+.btn-card { width: 100%; background-color: #f1f5f9; color: #334155; border: none; padding: 12px; font-size: 0.95rem; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
+.quiz-card:hover .btn-card { background-color: var(--primary); color: #ffffff; }
+
+/* CUESTIONARIO EN CURSO */
+.quiz-container { background-color: var(--card-bg); width: 100%; max-width: 560px; padding: 40px; border-radius: 24px; box-shadow: var(--shadow-premium); border: 1px solid var(--border-color); box-sizing: border-box; text-align: center; animation: slideUp 0.4s ease-out; position: relative; z-index: 10; }
+.progress-wrapper { margin-bottom: 35px; }
+.progress-bar-container { width: 100%; height: 10px; background-color: #f1f5f9; border-radius: 999px; position: relative; margin-bottom: 10px; }
+.progress-bar { height: 100%; width: var(--progreso-width, 0%); background: var(--bar-gradient); border-radius: 999px; transition: width 0.45s ease; }
+.progress-text { font-size: 0.85rem; font-weight: 600; color: #64748b; }
+.question-text { font-size: 1.3rem; font-weight: 700; line-height: 1.45; margin-bottom: 28px; text-align: left; }
+.options-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.option-label { display: flex; align-items: center; padding: 16px 20px; border: 2px solid var(--border-color); border-radius: 14px; background-color: #ffffff; cursor: pointer; font-size: 1rem; transition: all 0.2s ease; text-align: left; }
+.option-label:hover { border-color: var(--primary); background-color: #f8fafc; }
+.option-label input[type="radio"] { margin-right: 14px; transform: scale(1.25); accent-color: var(--primary); }
+.option-label:has(input[type="radio"]:checked) { border-color: var(--primary); background-color: #eff6ff; font-weight: 600; }
+.btn-submit { display: inline-block; width: 100%; padding: 16px; font-size: 1rem; font-weight: 600; color: #ffffff; background-color: #0f172a; border: none; border-radius: 14px; cursor: pointer; transition: all 0.2s ease; }
+.btn-submit:hover { background-color: var(--primary); }
+.motivation-text { margin-top: 25px; padding: 12px 16px; font-size: 0.88rem; font-weight: 500; font-style: italic; color: #475569; background-color: #f8fafc; border-radius: 10px; border-left: 3px solid var(--primary); display: inline-block; width: 100%; box-sizing: border-box; }
+
+/* ==========================================================================
+   NUEVO: ESTRUCTURA DE PANTALLA DE RESULTADOS AVANZADA Y CINEMÁTICA
+   ========================================================================== */
+.results-wrapper-flex {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0px; /* Se pegan de forma compacta */
+    width: 100%;
+    max-width: 1100px;
+    perspective: 1000px; /* Añade profundidad de renderizado */
+}
+
+.result-container {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 540px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow-premium);
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 20;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Efecto Desplazamiento Izquierdo */
+.result-container.shifted-left {
+    transform: translateX(-20px);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+/* DISEÑO DE LAS BARRAS CON RELLENO DEGRADADO PROPORCIONAL */
+.stats-box-advanced {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.bar-stat-row {
+    margin-bottom: 20px;
+}
+
+.bar-stat-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #334155;
+}
+
+.txt-correct { color: #10b981; }
+.txt-incorrect { color: #ef4444; }
+
+.bar-graphic-container {
+    width: 100%;
+    height: 14px;
+    background-color: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+/* Rellenos con degradados dinámicos proporcionales */
+.bar-filler {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.total-bar {
+    background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+}
+
+.correct-bar {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%); /* Degradado Verde Esmeralda */
+}
+
+.incorrect-bar {
+    background: linear-gradient(90deg, #f43f5e 0%, #e11d48 100%); /* Degradado Carmín */
+}
+
+.score-badge {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color);
+    text-align: center;
+}
+.score-badge h3 { font-size: 2.8rem; color: var(--primary); margin: 0; font-weight: 800; }
+
+/* BOTONES DE ACCIONES EN COLUMNA */
+.actions-vertical-gap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-restart {
+    display: inline-block;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #0f172a;
+    border: none;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.btn-restart:hover { background-color: var(--primary); }
+
+.btn-history-trigger {
+    width: 100%;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #475569;
+    background-color: #f1f5f9;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-history-trigger:hover {
+    background-color: #e2e8f0;
+    color: var(--text-main);
+}
+
+/* PANEL LATERAL DEL HISTORIAL */
+.history-side-panel {
+    width: 0px;
+    max-height: 600px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: var(--shadow-premium);
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 10;
+    text-align: left;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Activación por JS */
+.history-side-panel.panel-visible {
+    width: 460px;
+    padding: 32px 24px;
+    opacity: 1;
+    border-color: var(--border-color);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    transform: translateX(-20px);
+}
+
+.history-side-panel h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+
+.history-helper-text {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+}
+
+.history-scroll-box {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Estilo para las tarjetas internas de cada pregunta vista */
+.history-item-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.history-q-text {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    margin: 0 0 10px 0;
+    color: var(--text-main);
+}
+
+.history-choice-badge {
+    font-size: 0.85rem;
+    background-color: #eff6ff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+/* Personalización del Scrollbar interno del historial */
+.history-scroll-box::-webkit-scrollbar { width: 6px; }
+.history-scroll-box::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 999px; }
+.history-scroll-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+
+/* ANIMACIONES */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
