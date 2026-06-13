@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PALETA DE COLORES Y CONFIGURACIÓN PREMIUM 
+PALETA DE COLORES Y CONFIGURACIÓN PREMIUM 
    ========================================================================== */
 :root {
     --bg-app: #fcfdfe;            /* Fondo suave estilo papel satinado */
@@ -29,7 +29,7 @@ body {
 }
 
 /* ==========================================================================
-   CONTENEDORES DE INTERFAZ (Index, Test, Result)
+CONTENEDORES DE INTERFAZ (Index, Test, Result)
    ========================================================================== */
 .quiz-container, .result-container, body > form {
     background-color: var(--card-bg);
@@ -61,7 +61,7 @@ h2 {
 }
 
 /* ==========================================================================
-   NUEVA BARRA DE PROGRESO DEGRADADA COMPACTA
+NUEVA BARRA DE PROGRESO DEGRADADA COMPACTA
    ========================================================================== */
 .progress-wrapper {
     margin-bottom: 35px;
@@ -110,7 +110,7 @@ h2 {
 }
 
 /* ==========================================================================
-   ESTRUCTURA DE PREGUNTAS Y LISTAS (INDEX Y TEST)
+ESTRUCTURA DE PREGUNTAS Y LISTAS (INDEX Y TEST)
    ========================================================================== */
 .question-text {
     font-size: 1.3rem;
@@ -189,7 +189,7 @@ select:focus {
 }
 
 /* ==========================================================================
-   BOTONES PREMIUM DE ENVÍO
+BOTONES PREMIUM DE ENVÍO
    ========================================================================== */
 .btn-submit, input[type="submit"], .btn-restart {
     display: inline-block;
@@ -215,7 +215,7 @@ select:focus {
 }
 
 /* ==========================================================================
-   PÁGINA DE RESULTADOS
+PÁGINA DE RESULTADOS
    ========================================================================== */
 .stats-box {
     background-color: #f8fafc;
@@ -247,7 +247,7 @@ select:focus {
 .score-badge h3 { font-size: 2.8rem; color: #3b82f6; margin: 0; font-weight: 800; }
 
 /* ==========================================================================
-   ANIMACIONES
+ANIMACIONES
    ========================================================================== */
 @keyframes slideIn {
     from {
@@ -257,5 +257,33 @@ select:focus {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+
+.motivation-text {
+    margin-top: 25px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #475569;             
+    background-color: #f8fafc;  
+    border-radius: 10px;
+    border-left: 3px solid #3b82f6;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    animation: fadeInMotivacion 0.6s ease-out;
+}
+
+@keyframes fadeInMotivacion {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }
