@@ -3,24 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>Quizt - Mente en Crecimiento</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <h1>Bienvenido a Quizt</h1>
-    <h2>Seleccione un cuestionario:</h2>
+    <div class="presentation-container">
+        <span class="badge-intro">Cuestionarios Interactivos</span>
+        <h1 class="main-title">Quizt: El Despertar de la Curiosidad</h1>
+        
+        <p class="subtitle">Empieza a aprender con cosas simples del día a día a las que a veces no les prestamos la suficiente atención.</p>
+        
+        <div class="philosophical-box">
+            <p class="phrase">{{ frase.texto }}</p>
+            <span class="author">{{ frase.autor }}</span>
+        </div>
 
-    <form action="{{ url_for('index') }}" method="post">
-        <select name="quiz">
-            {% for id, name in quises %}
-            <option value="{{ id }}">{{ name }}</option>
-            {% endfor %}
-        </select>
-        <p><input type="submit" value="Seleccionar"></p>
-    </form>
+        <a href="{{ url_for('quises_selection') }}" class="btn-hero">¡Conoce nuestros quizes! →</a>
+    </div>
 </body>
 
 </html>
