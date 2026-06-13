@@ -1,17 +1,16 @@
 /* ==========================================================================
-PALETA DE COLORES Y CONFIGURACIÓN PREMIUM 
+   CONFIGURACIÓN PREMIUM Y COLORES UNIFICADOS
    ========================================================================== */
 :root {
-    --bg-app: #fcfdfe;            /* Fondo suave estilo papel satinado */
-    --card-bg: #ffffff;           /* Fondo blanco puro para las cajas */
-    --text-main: #1e293b;         /* Slate oscuro elegante para textos */
-    --text-muted: #64748b;        /* Gris suave corporativo */
-    --border-color: #e2e8f0;      /* Gris fino para los bordes */
-    
-    /* El degradado multicolor exacto del ejemplo */
+    --bg-app: #f8fafc;            /* Fondo papel satinado limpio */
+    --card-bg: #ffffff;           /* Blanco puro para tarjetas */
+    --text-main: #0f172a;         /* Slate oscuro sofisticado */
+    --text-muted: #475569;        /* Gris de lectura cómodo */
+    --border-color: #e2e8f0;      /* Líneas finas elegantes */
+    --primary: #3b82f6;           /* Azul académico */
+    --primary-hover: #1d4ed8;     /* Azul profundo */
     --bar-gradient: linear-gradient(90deg, #ff6b00 0%, #ff007f 35%, #00bfff 70%, #0040ff 100%);
-    
-    --shadow-premium: 0 20px 40px -15px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.02);
+    --shadow-premium: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.02);
 }
 
 body {
@@ -19,7 +18,7 @@ body {
     background-color: var(--bg-app);
     color: var(--text-main);
     margin: 0;
-    padding: 24px;
+    padding: 40px 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,9 +28,190 @@ body {
 }
 
 /* ==========================================================================
-CONTENEDORES DE INTERFAZ (Index, Test, Result)
+   PANTALLA 1: DISEÑO DE PRESENTACIÓN (INDEX)
    ========================================================================== */
-.quiz-container, .result-container, body > form {
+.presentation-container {
+    max-width: 680px;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.badge-intro {
+    background-color: #eff6ff;
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #0f172a 30%, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+.philosophical-box {
+    background-color: #ffffff;
+    border-left: 4px solid var(--primary);
+    padding: 24px 30px;
+    border-radius: 4px 16px 16px 4px;
+    box-shadow: var(--shadow-premium);
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.philosophical-box .phrase {
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #334155;
+    margin: 0 0 10px 0;
+}
+
+.philosophical-box .author {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.btn-hero {
+    display: inline-block;
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 18px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+    transition: all 0.25s ease;
+}
+
+.btn-hero:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -5px rgba(37, 99, 234, 0.3);
+}
+
+/* ==========================================================================
+   PANTALLA 2: CUADRÍCULA DE TARJETAS (QUISES)
+   ========================================================================== */
+.explore-header {
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 45px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.explore-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.02em;
+}
+
+.explore-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Configuración de una al lado de la otra (Responsive Grid) */
+.grid-container {
+    display: table;
+    word-spacing: -1em; /* Remueve espacios fantasmas */
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.quiz-card {
+    display: inline-block;
+    word-spacing: normal;
+    vertical-align: top;
+    width: 30%;
+    min-width: 280px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px 24px;
+    margin: 15px;
+    box-shadow: var(--shadow-premium);
+    box-sizing: border-box;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideUp 0.5s ease-out;
+}
+
+.quiz-card:hover {
+    transform: translateY(-6px);
+    border-color: #cbd5e1;
+    box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.12);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: var(--text-main);
+}
+
+.card-description {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    min-height: 68px; /* Mantiene alineados los botones si los textos varían */
+}
+
+.btn-card {
+    width: 100%;
+    background-color: #f1f5f9;
+    color: #334155;
+    border: none;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-card:hover .btn-card {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   JUEGO: CONTENEDORES DE PREGUNTAS Y RESULTADOS (TEST/RESULT)
+   ========================================================================== */
+.quiz-container, .result-container {
     background-color: var(--card-bg);
     width: 100%;
     max-width: 560px;
@@ -41,249 +221,60 @@ CONTENEDORES DE INTERFAZ (Index, Test, Result)
     border: 1px solid var(--border-color);
     box-sizing: border-box;
     text-align: center;
-    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideUp 0.4s ease-out;
 }
 
-h1 {
-    font-size: 2.1rem;
-    font-weight: 800;
-    margin-top: 0;
-    margin-bottom: 12px;
-    letter-spacing: -0.025em;
-}
-
-h2 {
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-top: 0;
-    margin-bottom: 32px;
-}
-
-/* ==========================================================================
-NUEVA BARRA DE PROGRESO DEGRADADA COMPACTA
-   ========================================================================== */
-.progress-wrapper {
-    margin-bottom: 35px;
-    text-align: center;
-}
-
+.progress-wrapper { margin-bottom: 35px; text-align: center; }
 .progress-bar-container {
-    width: 100%;
-    height: 10px;               /* Tamaño compacto y estilizado */
-    background-color: #f1f5f9;  /* Canal de fondo */
-    border-radius: 999px;       /* Forma de cápsula completa */
-    overflow: visible;          /* Permite ver el efecto glow externo */
-    position: relative;
-    margin-bottom: 10px;
+    width: 100%; height: 10px; background-color: #f1f5f9;
+    border-radius: 999px; position: relative; margin-bottom: 10px;
 }
-
 .progress-bar {
-    height: 100%;
-    width: var(--progreso-width, 0%);
-    background: var(--bar-gradient);
-    border-radius: 999px;
-    transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
+    height: 100%; width: var(--progreso-width, 0%);
+    background: var(--bar-gradient); border-radius: 999px;
+    transition: width 0.45s ease; position: relative;
 }
-
-/* Efecto Neón / Glow sutil debajo de la barra */
 .progress-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bar-gradient);
-    border-radius: 999px;
-    filter: blur(4px);
-    opacity: 0.4;
-    z-index: -1;
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bar-gradient); border-radius: 999px; filter: blur(4px); opacity: 0.4; z-index: -1;
 }
+.progress-text { font-size: 0.85rem; font-weight: 600; color: #64748b; }
 
-.progress-text {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-}
-
-/* ==========================================================================
-ESTRUCTURA DE PREGUNTAS Y LISTAS (INDEX Y TEST)
-   ========================================================================== */
-.question-text {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--text-main);
-    line-height: 1.45;
-    margin-bottom: 28px;
-    text-align: left;
-}
-
-.options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
-}
-
+.question-text { font-size: 1.3rem; font-weight: 700; line-height: 1.45; margin-bottom: 28px; text-align: left; }
+.options-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 .option-label {
-    display: flex;
-    align-items: center;
-    padding: 16px 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 14px;
-    background-color: #ffffff;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    text-align: left;
+    display: flex; align-items: center; padding: 16px 20px;
+    border: 2px solid var(--border-color); border-radius: 14px;
+    background-color: #ffffff; cursor: pointer; font-size: 1rem;
+    font-weight: 500; transition: all 0.2s ease; text-align: left;
 }
+.option-label:hover { border-color: var(--primary); background-color: #f8fafc; }
+.option-label input[type="radio"] { margin-right: 14px; transform: scale(1.25); accent-color: var(--primary); }
+.option-label:has(input[type="radio"]:checked) { border-color: var(--primary); background-color: #eff6ff; font-weight: 600; }
 
-.option-label:hover {
-    border-color: #3b82f6;
-    background-color: #f8fafc;
-    transform: translateY(-1px);
+.btn-submit, .btn-restart {
+    display: inline-block; width: 100%; padding: 16px; font-size: 1rem;
+    font-weight: 600; color: #ffffff; background-color: #0f172a;
+    border: none; border-radius: 14px; cursor: pointer; text-decoration: none; text-align: center; box-sizing: border-box; transition: all 0.2s ease;
 }
-
-.option-label input[type="radio"] {
-    margin-right: 14px;
-    transform: scale(1.25);
-    accent-color: #3b82f6;
-}
-
-/* Estado activo cuando el usuario selecciona una respuesta */
-.option-label:has(input[type="radio"]:checked) {
-    border-color: #3b82f6;
-    background-color: #eff6ff;
-    font-weight: 600;
-}
-
-/* Selector estilizado del INDEX */
-select {
-    width: 100%;
-    padding: 16px 20px;
-    font-size: 1rem;
-    background-color: #f1f5f9;
-    border: 2px solid transparent;
-    border-radius: 14px;
-    color: var(--text-main);
-    font-weight: 600;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-bottom: 24px;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 16px;
-}
-
-select:focus {
-    background-color: #ffffff;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
-
-/* ==========================================================================
-BOTONES PREMIUM DE ENVÍO
-   ========================================================================== */
-.btn-submit, input[type="submit"], .btn-restart {
-    display: inline-block;
-    width: 100%;
-    padding: 16px 24px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-    background-color: #1e293b; /* Botón oscuro elegante para contrastar */
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover, input[type="submit"]:hover, .btn-restart:hover {
-    background-color: #0f172a;
-    transform: translateY(-1px);
-    box-shadow: 0 10px 20px -10px rgba(15, 23, 42, 0.3);
-}
-
-/* ==========================================================================
-PÁGINA DE RESULTADOS
-   ========================================================================== */
-.stats-box {
-    background-color: #f8fafc;
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 32px;
-    text-align: left;
-}
-
-.stats-box p {
-    margin: 12px 0;
-    font-size: 1rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.stats-box .correct { color: #10b981; font-weight: 600; }
-.stats-box .incorrect { color: #f43f5e; font-weight: 600; }
-
-.score-badge {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--border-color);
-    text-align: center;
-}
-
-.score-badge p { display: block; color: var(--text-muted); margin-bottom: 4px; }
-.score-badge h3 { font-size: 2.8rem; color: #3b82f6; margin: 0; font-weight: 800; }
-
-/* ==========================================================================
-ANIMACIONES
-   ========================================================================== */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+.btn-submit:hover, .btn-restart:hover { background-color: var(--primary); }
 
 .motivation-text {
-    margin-top: 25px;
-    padding: 12px 16px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    font-style: italic;
-    color: #475569;             
-    background-color: #f8fafc;  
-    border-radius: 10px;
-    border-left: 3px solid #3b82f6;
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box;
-    animation: fadeInMotivacion 0.6s ease-out;
+    margin-top: 25px; padding: 12px 16px; font-size: 0.88rem; font-weight: 500; font-style: italic;
+    color: #475569; background-color: #f8fafc; border-radius: 10px; border-left: 3px solid var(--primary);
+    display: inline-block; width: 100%; box-sizing: border-box;
 }
 
-@keyframes fadeInMotivacion {
-    from {
-        opacity: 0;
-        transform: scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+/* Estadísticas del final */
+.stats-box { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; margin-bottom: 32px; text-align: left; }
+.stats-box p { margin: 12px 0; font-size: 1rem; display: flex; justify-content: space-between; }
+.stats-box .correct { color: #10b981; font-weight: 600; }
+.stats-box .incorrect { color: #f43f5e; font-weight: 600; }
+.score-badge { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color); text-align: center; }
+.score-badge h3 { font-size: 2.8rem; color: var(--primary); margin: 0; font-weight: 800; }
+
+/* ==========================================================================
+   ANIMACIONES CINEMÁTICAS
+   ========================================================================== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
