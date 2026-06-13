@@ -2,15 +2,18 @@
    CONFIGURACIÓN PREMIUM Y COLORES UNIFICADOS
    ========================================================================== */
 :root {
-    --bg-app: #f8fafc;            /* Fondo papel satinado limpio */
-    --card-bg: #ffffff;           /* Blanco puro para tarjetas */
-    --text-main: #0f172a;         /* Slate oscuro sofisticado */
-    --text-muted: #475569;        /* Gris de lectura cómodo */
-    --border-color: #e2e8f0;      /* Líneas finas elegantes */
-    --primary: #3b82f6;           /* Azul académico */
-    --primary-hover: #1d4ed8;     /* Azul profundo */
+    --bg-app: #f8fafc;            
+    --card-bg: #ffffff;           
+    --text-main: #0f172a;         
+    --text-muted: #475569;        
+    --border-color: #cbd5e1;      /* Ajustado un toque más visible para romper el blanco */
+    --primary: #3b82f6;           
+    --primary-hover: #1d4ed8;
     --bar-gradient: linear-gradient(90deg, #ff6b00 0%, #ff007f 35%, #00bfff 70%, #0040ff 100%);
     --shadow-premium: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.02);
+
+    /* COLOR EXCLUSIVO ENMENDADO: Verde menta claro y fresco extraído de tu referencia */
+    --bg-menta-claro: #f0fdf4; 
 }
 
 body {
@@ -25,16 +28,127 @@ body {
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Unificación: La lista de quizes y la pantalla de resultados comparten el fondo verde menta */
+body.page-quises, body.page-results {
+    background: var(--bg-menta-claro) !important;
+}
+
+body.page-home {
+    background-color: #fcfdfe;
 }
 
 /* ==========================================================================
-   PANTALLA 1: DISEÑO DE PRESENTACIÓN (INDEX)
+   FIGURAS GEOMÉTRICAS DECORATIVAS RE-IMAGINADAS (EVITA EL RUIDO VISUAL)
+   ========================================================================== */
+.decor-shape {
+    position: absolute;
+    opacity: 0.12; /* Muy sutil inicialmente como una marca de agua */
+    transition: all 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+    cursor: pointer;
+}
+
+/* Figura 1: Esfera en gradiente superior izquierda */
+.shape-circle-1 {
+    top: 10%;
+    left: 6%;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #2563eb, #06b6d4);
+}
+
+/* Figura 2: Esfera en gradiente inferior derecha */
+.shape-circle-2 {
+    bottom: 12%;
+    right: 8%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #7c3aed, #db2777);
+}
+
+/* NUEVA FIGURA 3: Anillo Líquido (Donut) en la zona media izquierda */
+.shape-donut-3 {
+    top: 50%;
+    left: 4%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 18px solid transparent;
+    background: linear-gradient(#fcfdfe, #fcfdfe) padding-box, 
+                linear-gradient(135deg, #0ea5e9, #10b981) border-box; /* Borde multicolor */
+    transform: translateY(-50%) rotate(0deg);
+}
+
+/* NUEVA FIGURA 4: Cápsula geométrica inclinada en la zona superior derecha */
+.shape-pill-4 {
+    top: 22%;
+    right: 5%;
+    width: 50px;
+    height: 110px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(249, 115, 22, 0.7), rgba(236, 72, 153, 0.7));
+    transform: rotate(-25deg);
+}
+
+/* --- ANIMACIONES E INTERACCIONES AL PASAR EL MOUSE (HOVER) --- */
+.shape-circle-1:hover {
+    opacity: 0.5;
+    transform: scale(1.15) translate(8px, 8px);
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+}
+
+.shape-circle-2:hover {
+    opacity: 0.5;
+    transform: scale(1.1) translate(-8px, -8px);
+    filter: drop-shadow(0 0 20px rgba(219, 39, 119, 0.4));
+}
+
+.shape-donut-3:hover {
+    opacity: 0.6;
+    transform: translateY(-50%) rotate(180deg) scale(1.2);
+    filter: drop-shadow(0 0 15px rgba(16, 115, 129, 0.3));
+}
+
+.shape-pill-4:hover {
+    opacity: 0.5;
+    transform: rotate(20deg) scale(1.15);
+    filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.4));
+}
+
+/* ==========================================================================
+   CORTINA DE TRANSICIÓN CINEMÁTICA
+   ========================================================================== */
+.transition-curtain {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    z-index: 9999;
+    transition: left 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+    pointer-events: none;
+}
+.transition-curtain.active {
+    left: 0;
+}
+
+/* ==========================================================================
+   COMPONENTES DEL PROYECTO (TARJETAS, CONTENEDORES Y BOTONES)
    ========================================================================== */
 .presentation-container {
     max-width: 680px;
     text-align: center;
     padding: 20px;
     animation: fadeIn 0.5s ease-out;
+    position: relative;
+    z-index: 10; 
 }
 
 .badge-intro {
@@ -113,14 +227,12 @@ body {
     box-shadow: 0 12px 30px -5px rgba(37, 99, 234, 0.3);
 }
 
-/* ==========================================================================
-   PANTALLA 2: CUADRÍCULA DE TARJETAS (QUISES)
-   ========================================================================== */
+/* EXPLORAR QUIZES */
 .explore-header {
     text-align: center;
     max-width: 600px;
     margin-bottom: 45px;
-    animation: fadeIn 0.4s ease-out;
+    animation: slideUp 0.4s ease-out;
 }
 
 .explore-header h1 {
@@ -136,10 +248,9 @@ body {
     margin: 0;
 }
 
-/* Configuración de una al lado de la otra (Responsive Grid) */
 .grid-container {
     display: table;
-    word-spacing: -1em; /* Remueve espacios fantasmas */
+    word-spacing: -1em;
     width: 100%;
     max-width: 1024px;
     margin: 0 auto;
@@ -164,10 +275,11 @@ body {
     animation: slideUp 0.5s ease-out;
 }
 
+/* Resalte de tarjetas debido al nuevo fondo unificado verde menta */
 .quiz-card:hover {
     transform: translateY(-6px);
-    border-color: #cbd5e1;
-    box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.12);
+    border-color: #93c5fd; 
+    box-shadow: 0 35px 60px -15px rgba(15, 23, 42, 0.15);
 }
 
 .card-icon {
@@ -187,7 +299,7 @@ body {
     color: var(--text-muted);
     line-height: 1.5;
     margin: 0 0 24px 0;
-    min-height: 68px; /* Mantiene alineados los botones si los textos varían */
+    min-height: 68px;
 }
 
 .btn-card {
@@ -208,9 +320,7 @@ body {
     color: #ffffff;
 }
 
-/* ==========================================================================
-   JUEGO: CONTENEDORES DE PREGUNTAS Y RESULTADOS (TEST/RESULT)
-   ========================================================================== */
+/* CONTENEDOR DE JUEGO (TEST / RESULT) */
 .quiz-container, .result-container {
     background-color: var(--card-bg);
     width: 100%;
@@ -222,6 +332,8 @@ body {
     box-sizing: border-box;
     text-align: center;
     animation: slideUp 0.4s ease-out;
+    position: relative;
+    z-index: 10;
 }
 
 .progress-wrapper { margin-bottom: 35px; text-align: center; }
@@ -274,7 +386,7 @@ body {
 .score-badge h3 { font-size: 2.8rem; color: var(--primary); margin: 0; font-weight: 800; }
 
 /* ==========================================================================
-   ANIMACIONES CINEMÁTICAS
+   ANIMACIONES 
    ========================================================================== */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
