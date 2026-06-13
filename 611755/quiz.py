@@ -6,6 +6,16 @@ import sqlite3
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'NoTieneClave'
 
+MENSAJES_MOTIVADORES = [
+    "¡Excelente progreso! Continúa con ese gran entusiasmo.",
+    "Cada pregunta es una nueva oportunidad para aprender algo grandioso.",
+    "¡Vas por muy buen camino! El conocimiento se construye paso a paso.",
+    "No te detengas, estás haciendo un esfuerzo magnífico.",
+    "El aprendizaje requiere práctica, ¡y lo estás haciendo genial!",
+    "¡Mantén el foco! Estás descubriendo nuevas habilidades hoy.",
+    "¡Qué buena concentración! Sigue respondiendo con confianza.",
+    "Tu mente se expande con cada desafío. ¡Sigue adelante!"
+]
 
 def start_quiz(quiz_id):
     session['quiz'] = int(quiz_id)
@@ -13,17 +23,15 @@ def start_quiz(quiz_id):
     session['correctas'] = 0
     session['totales'] = 0
     
-    # Obtenemos el total real de preguntas de este quiz para calcular el % perfecto
     try:
         conn = sqlite3.connect("quises.sqlite")
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM quiz_content WHERE quiz_id = ?", [quiz_id])
-        session['max_preguntas'] = cursor.fetchone()[0] or 5 # 5 por defecto si falla
+        session['max_preguntas'] = cursor.fetchone()[0] or 5
         cursor.close()
         conn.close()
     except:
         session['max_preguntas'] = 5
-
 
 def end_quiz():
     session.clear()
@@ -42,7 +50,6 @@ def calc_stats(total, correct):
         return round((correct / total) * 100, 2)
     return 0
 
-
 def index():
     if request.method == 'GET':
         end_quiz()
@@ -54,7 +61,6 @@ def index():
             start_quiz(quiz_id)
             return redirect(url_for('test'))
         return redirect(url_for('index'))
-
 
 def test():
     if 'quiz' not in session or 'prev_question' not in session:
@@ -71,12 +77,9 @@ def test():
     session['prev_question'] = result[0]
     session['last_correct'] = result[2]
 
-    # Mezclamos las opciones
     respuestas = list(result[2:6]) 
     random.shuffle(respuestas) 
 
-    # CÁLCULO DEL PORCENTAJE EXACTO Y REAL
-    # El progreso actual representa las preguntas que ya va a responder (ej: pregunta 1 de 5 = 20%)
     preguntas_vistas = session.get('totales', 0) + 1
     max_preguntas = session.get('max_preguntas', 5)
     
@@ -84,11 +87,16 @@ def test():
     if porcentaje_barra > 100:
         porcentaje_barra = 100
 
+    # Seleccionamos un mensaje motivador aleatorio para esta pregunta
+    mensaje_actual = random.choice(MENSAJES_MOTIVADORES)
+
     return render_template('test.html', 
                            pregunta=result[1], 
                            opciones=respuestas, 
-                           progreso=porcentaje_barra)
-
+                           progreso=porcentaje_barra,
+                           numero_pregunta=preguntas_vistas,
+                           total_preguntas=max_preguntas,
+                           motivacion=mensaje_actual)
 
 def result():
     if 'totales' not in session:
